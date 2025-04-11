@@ -1,5 +1,5 @@
 # Base build
-FROM python:3.13.1-alpine3.21 AS base
+FROM python:3.13.3-alpine3.21 AS base
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
@@ -26,7 +26,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 
 # Now multistage build
-FROM python:3.13.1-alpine3.21
+FROM python:3.13.3-alpine3.21
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
