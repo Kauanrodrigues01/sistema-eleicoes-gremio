@@ -5,12 +5,144 @@
 
 {% block content %}
   <div class="container mt-4">
-    <h3 class="display-6 text-center">Votação por Chapa</h3>
+    <h3 class="display-6 text-center mb-4">Votação do Grêmio Estudantil</h3>
 
+    <!-- Seção de Métricas Principais -->
+    <div class="row mb-4">
+      <!-- Total de Votos -->
+      <div class="col-md-4 mb-3">
+        <div class="card border-primary h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title"><i class="fas fa-vote-yea text-primary"></i> Total de Votos</h5>
+            <h2 class="display-4">{{ total_votes }}</h2>
+            <p class="text-muted">Votos registrados</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapas Participantes -->
+      <div class="col-md-4 mb-3">
+        <div class="card border-success h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title"><i class="fas fa-users text-success"></i> Chapas</h5>
+            <h2 class="display-4">{{ team_ranking|length }}</h2>
+            <p class="text-muted">Chapas participantes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turmas Participantes -->
+      <div class="col-md-4 mb-3">
+        <div class="card border-info h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title"><i class="fas fa-graduation-cap text-info"></i> Turmas</h5>
+            <h2 class="display-4">{{ votes_by_tier|length }}</h2>
+            <p class="text-muted">Turmas participantes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ranking das Chapas -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-trophy"></i> Ranking das Chapas</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Posição</th>
+                    <th scope="col">Chapa</th>
+                    <th scope="col">Votos</th>
+                    <th scope="col">Percentual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for team in team_ranking %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}º</th>
+                        <td>{{ team.team__name }}</td>
+                        <td>{{ team.votes }}</td>
+                        <td>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-success" 
+                                role="progressbar" 
+                                style="width: {% widthratio team.votes total_votes 100 %}%" 
+                                aria-valuenow="{{ team.votes }}" 
+                                aria-valuemin="0" 
+                                aria-valuemax="{{ total_votes }}">
+                            {% widthratio team.votes total_votes 100 as percentage %}
+                            {{ percentage|floatformat:1 }}%
+                            </div>
+                        </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalhes por Turma -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-chalkboard-teacher"></i> Votação por Turma</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {% for tier in votes_by_tier %}
+              <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h6 class="mb-0">{{ tier.tier|default:"Não informado" }}</h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="mb-2"><strong>Total de votos:</strong> {{ tier.total }}</p>
+                    {% if 'participation_by_tier' in votes_metrics %}
+                    <p class="mb-2"><strong>Participação:</strong> 
+                      {% for pt in participation_by_tier %}
+                        {% if pt.tier == tier.tier %}
+                          {{ pt.percentage|floatformat:1 }}%
+                        {% endif %}
+                      {% endfor %}
+                    </p>
+                    {% endif %}
+                    <hr>
+                    <h6 class="mb-2">Distribuição por Chapa:</h6>
+                    <ul class="list-group list-group-flush">
+                      {% for vote in votes_by_tier_and_team %}
+                        {% if vote.tier == tier.tier %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          {{ vote.team__name }}
+                          <span class="badge bg-primary rounded-pill">{{ vote.total }}</span>
+                        </li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico Principal (mantido como estava) -->
     <div class="row mt-5 justify-content-center">
-      <div class="col-md-8 text-center">
+      <div class="col-md-12 text-center">
         {% if team_metrics != '{}' %}
-          <h5 class="mb-3">Distribuição de Votos</h5>
+          <h5 class="mb-3">Distribuição Geral de Votos</h5>
           <div class="mb-4"></div>
           <div class="embed-responsive embed-responsive-1by1 mr-5" style="width: 800px; display: inline-block;">
             <canvas id="teamMetricsChart" class="embed-responsive-item"></canvas>
@@ -19,84 +151,109 @@
           <div class="alert alert-info">Nenhum dado de votação disponível ainda.</div>
         {% endif %}
       </div>
+    </div>
+  </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-      
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {  
-            var teamMetrics = JSON.parse('{{ team_metrics|escapejs }}');
-            
-            var backgroundColors = [
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(75, 192, 192, 0.7)',
-                'rgba(255, 159, 64, 0.7)',
-                'rgba(153, 102, 255, 0.7)'
-            ];
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {  
+        var teamMetrics = JSON.parse('{{ team_metrics|escapejs }}');
         
-            var ctx = document.getElementById('teamMetricsChart').getContext('2d');
-            var teamChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(teamMetrics),
-                    datasets: [{
-                        label: 'Número de Votos',
-                        data: Object.values(teamMetrics),
-                        backgroundColor: backgroundColors,
-                        borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.parsed.y} voto${context.parsed.y !== 1 ? 's' : ''}`;
-                                }
-                            }
-                        },
-                        datalabels: {
-                            color: '#000',
-                            anchor: 'end',
-                            align: 'top',
-                            formatter: function(value) {
-                                return value;
+        var backgroundColors = [
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(153, 102, 255, 0.7)'
+        ];
+    
+        var ctx = document.getElementById('teamMetricsChart').getContext('2d');
+        var teamChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(teamMetrics),
+                datasets: [{
+                    label: 'Número de Votos',
+                    data: Object.values(teamMetrics),
+                    backgroundColor: backgroundColors,
+                    borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.parsed.y} voto${context.parsed.y !== 1 ? 's' : ''}`;
                             }
                         }
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1,  // Mostra de 1 em 1
-                                precision: 0   // Sem decimais
-                            },
-                            title: {
-                                display: true,
-                                text: 'Quantidade de Votos'
-                            },
-                            // Configuração para não ter limite máximo
-                            suggestedMin: 0,
-                            suggestedMax: Math.max(...Object.values(teamMetrics)) + 1
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Chapas'
-                            }
+                    datalabels: {
+                        color: '#000',
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value;
                         }
                     }
                 },
-                plugins: [ChartDataLabels]
-            });
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
+                        },
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Votos'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: Math.max(...Object.values(teamMetrics)) + 1
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Chapas'
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
         });
-      </script>
-    </div>
-  </div>
+    });
+  </script>
+
+  <!-- CSS Adicional -->
+  <style>
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .progress {
+      position: relative;
+    }
+    .progress-bar {
+      font-size: 0.8rem;
+      line-height: 20px;
+    }
+    .table th {
+      white-space: nowrap;
+    }
+    .badge {
+      font-size: 0.9rem;
+    }
+  </style>
 {% endblock %}
