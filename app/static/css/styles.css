@@ -1,0 +1,100 @@
+/* Margem */
+.m-6 { margin: 4rem; }
+.m-7 { margin: 5rem; }
+.m-8 { margin: 6rem; }
+.m-9 { margin: 7rem; }
+
+/* Padding */
+.p-6 { padding: 4rem; }
+.p-7 { padding: 5rem; }
+.p-8 { padding: 6rem; }
+.p-9 { padding: 7rem; }
+
+/* Direcionadas */
+
+/* Margem */
+.ms-6 { margin-left: 4rem; }
+.ms-7 { margin-left: 5rem; }
+.ms-8 { margin-left: 6rem; }
+.ms-9 { margin-left: 7rem; }
+
+.me-6 { margin-right: 4rem; }
+.me-7 { margin-right: 5rem; }
+.me-8 { margin-right: 6rem; }
+.me-9 { margin-right: 7rem; }
+
+.mt-6 { margin-top: 4rem; }
+.mt-7 { margin-top: 5rem; }
+.mt-8 { margin-top: 6rem; }
+.mt-9 { margin-top: 7rem; }
+
+.mb-6 { margin-bottom: 4rem; }
+.mb-7 { margin-bottom: 5rem; }
+.mb-8 { margin-bottom: 6rem; }
+.mb-9 { margin-bottom: 7rem; }
+
+.mx-6 { margin-left: 4rem; margin-right: 4rem; }
+.mx-7 { margin-left: 5rem; margin-right: 5rem; }
+.mx-8 { margin-left: 6rem; margin-right: 6rem; }
+.mx-9 { margin-left: 7rem; margin-right: 7rem; }
+
+.my-6 { margin-top: 4rem; margin-bottom: 4rem; }
+.my-7 { margin-top: 5rem; margin-bottom: 5rem; }
+.my-8 { margin-top: 6rem; margin-bottom: 6rem; }
+.my-9 { margin-top: 7rem; margin-bottom: 7rem; }
+
+/* Padding */
+.ps-6 { padding-left: 4rem; }
+.ps-7 { padding-left: 5rem; }
+.ps-8 { padding-left: 6rem; }
+.ps-9 { padding-left: 7rem; }
+
+.pe-6 { padding-right: 4rem; }
+.pe-7 { padding-right: 5rem; }
+.pe-8 { padding-right: 6rem; }
+.pe-9 { padding-right: 7rem; }
+
+.pt-6 { padding-top: 4rem; }
+.pt-7 { padding-top: 5rem; }
+.pt-8 { padding-top: 6rem; }
+.pt-9 { padding-top: 7rem; }
+
+.pb-6 { padding-bottom: 4rem; }
+.pb-7 { padding-bottom: 5rem; }
+.pb-8 { padding-bottom: 6rem; }
+.pb-9 { padding-bottom: 7rem; }
+
+.px-6 { padding-left: 4rem; padding-right: 4rem; }
+.px-7 { padding-left: 5rem; padding-right: 5rem; }
+.px-8 { padding-left: 6rem; padding-right: 6rem; }
+.px-9 { padding-left: 7rem; padding-right: 7rem; }
+
+.py-6 { padding-top: 4rem; padding-bottom: 4rem; }
+.py-7 { padding-top: 5rem; padding-bottom: 5rem; }
+.py-8 { padding-top: 6rem; padding-bottom: 6rem; }
+.py-9 { padding-top: 7rem; padding-bottom: 7rem; }
+
+.container-fluid.control {
+    max-width: 1500px;
+}
+
+
+@media (max-width: 767px) {
+    td, th {
+        font-size: 12px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    td, th {
+        font-size: 14px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    td, th {
+        font-size: 16px !important;
+    }
+}
+
+  

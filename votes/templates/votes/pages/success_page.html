@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5 text-center">
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 8 0a8 8 0 0 1 8 8zm-3.97-3.03a.75.75 0 0 0-1.08 0L7.477 8.943 5.943 7.477a.75.75 0 1 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5a.75.75 0 0 0 0-1.06z"/>
+      </svg>
+      <div>
+        O formulário foi preenchido corretamente e os dados foram salvos com sucesso!
+      </div>
+    </div>
+  </div>
+{% endblock %}

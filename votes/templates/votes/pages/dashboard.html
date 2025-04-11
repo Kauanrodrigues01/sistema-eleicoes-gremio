@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - AFS{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3 class="display-6 text-center">Votação por Chapa</h3>
+
+    <div class="row mt-5 justify-content-center">
+      <div class="col-md-8 text-center">
+        {% if team_metrics != '{}' %}
+          <h5 class="mb-3">Distribuição de Votos</h5>
+          <div class="mb-4"></div>
+          <div class="embed-responsive embed-responsive-1by1 mr-5" style="width: 800px; display: inline-block;">
+            <canvas id="teamMetricsChart" class="embed-responsive-item"></canvas>
+          </div>
+        {% else %}
+          <div class="alert alert-info">Nenhum dado de votação disponível ainda.</div>
+        {% endif %}
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+      
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {  
+            var teamMetrics = JSON.parse('{{ team_metrics|escapejs }}');
+            
+            var backgroundColors = [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(255, 159, 64, 0.7)',
+                'rgba(153, 102, 255, 0.7)'
+            ];
+        
+            var ctx = document.getElementById('teamMetricsChart').getContext('2d');
+            var teamChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(teamMetrics),
+                    datasets: [{
+                        label: 'Número de Votos',
+                        data: Object.values(teamMetrics),
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.parsed.y} voto${context.parsed.y !== 1 ? 's' : ''}`;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#000',
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: function(value) {
+                                return value;
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,  // Mostra de 1 em 1
+                                precision: 0   // Sem decimais
+                            },
+                            title: {
+                                display: true,
+                                text: 'Quantidade de Votos'
+                            },
+                            // Configuração para não ter limite máximo
+                            suggestedMin: 0,
+                            suggestedMax: Math.max(...Object.values(teamMetrics)) + 1
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Chapas'
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        });
+      </script>
+    </div>
+  </div>
+{% endblock %}
