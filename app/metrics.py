@@ -14,7 +14,6 @@ def get_votes_metrics():
     metrics = {
         'total_votes': total_votes,
         'votes_by_tier': Vote.objects.values('tier').annotate(total=Count('id')).order_by('tier'),
-        'votes_by_team': Vote.objects.values('team__name').annotate(total=Count('id')).order_by('-total'),
         'votes_by_tier_and_team': Vote.objects.values('tier', 'team__name').annotate(total=Count('id')).order_by('tier', '-total'),
         'team_ranking': Vote.objects.values('team__name').annotate(votes=Count('id')).order_by('-votes'),
     }

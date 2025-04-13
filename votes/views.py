@@ -63,7 +63,6 @@ def dashboard(request):
         # Métricas de votos (dados brutos para uso no template)
         'total_votes': votes_metrics['total_votes'],
         'votes_by_tier': votes_metrics['votes_by_tier'],
-        'votes_by_team': votes_metrics['votes_by_team'],
         'votes_by_tier_and_team': votes_metrics['votes_by_tier_and_team'],
         'team_ranking': votes_metrics['team_ranking'],
     }

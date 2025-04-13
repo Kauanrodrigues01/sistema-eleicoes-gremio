@@ -107,7 +107,7 @@
                   </div>
                   <div class="card-body">
                     <p class="mb-2"><strong>Total de votos:</strong> {{ tier.total }}</p>
-                    {% if 'participation_by_tier' in votes_metrics %}
+                    {% if participation_by_tier %}
                     <p class="mb-2"><strong>Participação:</strong> 
                       {% for pt in participation_by_tier %}
                         {% if pt.tier == tier.tier %}
