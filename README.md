@@ -1,6 +1,6 @@
 # Sistema de Votação para Eleições do Grêmio Estudantil - EEEP Adolfo Ferreira de Sousa
 
-![Dashboard do Sistema de Votação](https://github.com/Kauanrodrigues01/Kauanrodrigues01/blob/main/images/projetos/foto-dashboard-eleicoes-gremio.png?raw=true)
+![Dashboard do Sistema de Votação](https://raw.githubusercontent.com/Kauanrodrigues01/Kauanrodrigues01/refs/heads/main/images/projetos/sistema-eleicoes-gremio/foto-dashboard-eleicoes-gremio.png)
 
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
@@ -88,3 +88,6 @@ http://localhost:8000
 ---
 
 #### Desenvolvido para a EEEP Adolfo Ferreira de Sousa - © 2025
+
+<br>
+<br>
