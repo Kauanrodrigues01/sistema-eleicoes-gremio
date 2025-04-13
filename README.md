@@ -78,7 +78,7 @@ ADMIN_PASSWORD=1234
 
 3. Inicie os containers com Docker:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 4. Acesse a aplicação:
