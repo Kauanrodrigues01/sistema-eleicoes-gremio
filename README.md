@@ -80,7 +80,7 @@ ADMIN_PASSWORD=1234
 docker-compose up -d
 ```
 
-3. Acesse a aplicação:
+4. Acesse a aplicação:
 ```
 http://localhost:8000
 ```
@@ -89,5 +89,4 @@ http://localhost:8000
 
 #### Desenvolvido para a EEEP Adolfo Ferreira de Sousa - © 2025
 
-<br>
 <br>
