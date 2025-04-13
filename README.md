@@ -1,5 +1,7 @@
 # Sistema de Votação para Eleições do Grêmio Estudantil - EEEP Adolfo Ferreira de Sousa
 
+![Dashboard do Sistema de Votação](https://github.com/Kauanrodrigues01/Kauanrodrigues01/blob/main/images/projetos/foto-dashboard-eleicoes-gremio.png?raw=true)
+
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -16,15 +18,14 @@ Sistema desenvolvido para gerenciar o processo eleitoral do Grêmio Estudantil d
 - Impedimento de votos duplicados
 
 ### 📊 Dashboard de Resultados
-- Visualização em tempo real dos resultados
+- Visualização dos resultados
 - Gráficos interativos com Chart.js
 - Dados detalhados por turma e geral
 
 ### 👥 CRUD de Chapas
 - Cadastro de chapas candidatas
 - Edição de informações
-- Remoção de chapas (com confirmação)
-- Visualização detalhada de cada chapa
+- Remoção de chapas
 
 ## Tecnologias Utilizadas
 
