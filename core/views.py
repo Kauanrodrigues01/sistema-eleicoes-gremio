@@ -6,7 +6,7 @@ from django.contrib import messages
 
 def login_get_view(request):
     if request.user.is_authenticated:
-        return redirect('dashboard:home')
+        return redirect('votes:home')
 
     next_page = request.GET.get('next', '')
 
@@ -26,7 +26,7 @@ def login_get_view(request):
 
 def login_post_view(request):
     if request.user.is_authenticated:
-        return redirect('dashboard:home')
+        return redirect('votes:home')
 
     next_page = request.session.get('next_page')
 
