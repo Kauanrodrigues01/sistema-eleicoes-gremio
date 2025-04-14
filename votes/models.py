@@ -33,9 +33,13 @@ class Vote(models.Model):
         ('1L', '1º Logística'),
         ('2L', '2º Logística'),
     ]
-    student_name = models.CharField(max_length=255)
+    matriculation_number = models.CharField(max_length=255, unique=True, error_messages={'unique': 'Esta matrícula já foi registrada.'})
     tier = models.CharField(max_length=3, choices=TIER_CHOICES)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='selections')
 
     def __str__(self):
-        return f"{self.student_name} - {self.team.name} - {self.tier}"
+        return f"{self.matriculation_number} - {self.team.name} - {self.tier}"
+
+    def save(self, **kwargs):
+        self.matriculation_number = self.matriculation_number.strip()
+        return super().save(**kwargs)

@@ -6,26 +6,24 @@ from votes.models import Vote
 class VoteForm(forms.ModelForm):
     class Meta:
         model = Vote
-        fields = ['team', 'student_name', 'tier']
+        fields = ['team', 'matriculation_number', 'tier']
         labels = {
-            'student_name': 'Nome Completo',
+            'matriculation_number': 'Número da Matrícula',
             'tier': 'Turma',
             'team': 'Chapa Desejada'
         }
         widgets = {
-            'student_name': forms.TextInput(attrs={
+            'matriculation_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Digite seu nome'
+                'placeholder': 'Digite o número da matrícula'
             }),
             'tier': forms.Select(attrs={'class': 'form-select'}),
             'team': forms.Select(attrs={'class': 'form-select'})
         }
 
-    def clean_student_name(self):
-        student_name = self.cleaned_data.get('student_name')
-        if len(student_name) < 8:
-            raise forms.ValidationError('O nome deve ter pelo menos 8 caracteres.')
-        return student_name
+    def clean_matriculation_number(self):
+        matriculation_number = self.cleaned_data.get('matriculation_number').strip()
+        return matriculation_number
 
     def clean_tier(self):
         tier = self.cleaned_data.get('tier')
