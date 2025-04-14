@@ -143,3 +143,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
     'https://sistema-eleicoes-gremio.onrender.com'
 ]
+
+LOGIN_URL = 'core:login'

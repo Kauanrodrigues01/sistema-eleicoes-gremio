@@ -3,14 +3,16 @@ import json
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import Count, Case, When, Value, BooleanField
+from django.contrib.auth.decorators import login_required
 
 from app.metrics import get_graphic_team_metrics, get_votes_metrics
 from votes.forms import VoteForm
 from .models import Team
 
 
+@login_required
 def home(request):
-    """Exibe a página inicial com o formulário e a lista de professores."""
+    """Exibe a página inicial com o formulário"""
     if request.method == "POST":
         form = VoteForm(request.POST)
         if form.is_valid():
@@ -22,12 +24,14 @@ def home(request):
     return render(request, 'votes/pages/home.html', {'form': form})
 
 
+@login_required
 def success_page(request):
     return render(request, 'votes/pages/success_page.html')
 
 
+@login_required
 def get_team_data(request, team_id):
-    """Retorna os dados do professor para popular a imagem via AJAX."""
+    """Retorna os dados da chapa para popular a imagem via AJAX."""
     try:
         teacher = Team.objects.get(id=team_id)
         photo_url = teacher.photo.url if teacher.photo else "/static/default-avatar.png"  # Adicionada verificação para evitar erro se a foto não existir
@@ -39,6 +43,7 @@ def get_team_data(request, team_id):
         return JsonResponse({'error': 'Professor não encontrado'}, status=404)
 
 
+@login_required
 def get_teams_data(request):
     teams = Team.objects.annotate(
         num_selections=Count('selections'),
@@ -52,6 +57,7 @@ def get_teams_data(request):
     return JsonResponse(list(teams), safe=False)  # Convertendo a QuerySet em uma lista para serialização
 
 
+@login_required
 def dashboard(request):
     # Obtém as métricas
     team_metrics = get_graphic_team_metrics()
