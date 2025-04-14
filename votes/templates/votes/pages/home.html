@@ -56,35 +56,6 @@
         let teamName = document.getElementById("team-name");
         let teamPhoto = document.getElementById("team-photo");
 
-        // Função para desabilitar chapas indisponíveis
-        function updateTeamAvailability() {
-            fetch("/api/teams/")  // Endpoint da API que retorna as chapas
-                .then(response => response.json())
-                .then(data => {
-                    let unavailableOptions = [];
-        
-                    data.forEach(team => {
-                        let option = teamSelect.querySelector(`option[value="${team.id}"]`);
-                        if (option) {
-                            if (!team.is_available) {
-                                option.disabled = true;  // Desabilita a opção
-                                option.textContent += " (Indisponível)";  // Adiciona aviso visual
-                                unavailableOptions.push(option);  // Armazena para mover depois
-                            }
-                        }
-                    });
-        
-                    // Move opções indisponíveis para o final
-                    unavailableOptions.forEach(option => {
-                        teamSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Erro ao buscar disponibilidade das chapas:", error));
-        }
-
-        // Atualiza a disponibilidade ao carregar a página
-        updateTeamAvailability();
-
         // Exibir informações da chapa selecionada
         teamSelect.addEventListener("change", function() {
             let teamId = this.value;

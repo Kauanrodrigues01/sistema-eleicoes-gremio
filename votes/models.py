@@ -3,7 +3,7 @@ from django.db import models
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to='teams_photos/')
+    photo = models.ImageField(upload_to='teams_photos/', null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -16,6 +16,18 @@
               <span class="ms-1">Home</span>
             </a>
           </li>
+
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <form action="{% url 'core:logout' %}" method="post" id="logout-form" class="nav-link p-0 align-middle">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link text-decoration-none text-reset nav-link p-0 align-middle">
+                <i class="bi bi-box-arrow-right fs-4 align-middle"></i>
+                <span class="ms-1 align-middle">Sair</span>
+              </button>
+            </form>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>

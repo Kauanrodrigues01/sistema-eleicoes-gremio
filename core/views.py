@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 
 
 def login_get_view(request):
@@ -38,11 +39,13 @@ def login_post_view(request):
             user = form.get_user()
             login(request, user)
             request.session.pop('next_page') if next_page else ...
+            messages.success(request, 'Login realizado com sucesso.')
             return redirect(next_page) if next_page else redirect('votes:home')
         else:
             request.session['errors_login_form'] = [
-                "Credenciais incorretas."
+                'Credenciais incorretas.'
             ]
+            messages.error(request, 'Credenciais incorretas.')
             return redirect('core:login')
 
 

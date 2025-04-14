@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import Count, Case, When, Value, BooleanField
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from app.metrics import get_graphic_team_metrics, get_votes_metrics
 from votes.forms import VoteForm
@@ -17,7 +18,9 @@ def home(request):
         form = VoteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("votes:success_page")  # Redireciona para uma página de sucesso após o envio
+            messages.success(request, 'Voto registrado com sucesso!')
+        else:
+            messages.error(request, 'Preencha corretamente os dados.')
     else:
         form = VoteForm()
 
