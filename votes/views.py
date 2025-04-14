@@ -25,6 +25,7 @@ def home(request):
 def success_page(request):
     return render(request, 'votes/pages/success_page.html')
 
+
 def get_team_data(request, team_id):
     """Retorna os dados do professor para popular a imagem via AJAX."""
     try:
@@ -36,7 +37,8 @@ def get_team_data(request, team_id):
         })
     except Team.DoesNotExist:
         return JsonResponse({'error': 'Professor não encontrado'}, status=404)
-    
+
+
 def get_teams_data(request):
     teams = Team.objects.annotate(
         num_selections=Count('selections'),
@@ -54,23 +56,23 @@ def dashboard(request):
     # Obtém as métricas
     team_metrics = get_graphic_team_metrics()
     votes_metrics = get_votes_metrics()
-    
+
     # Prepara o contexto
     context = {
         # Métricas de equipe (já serializadas para JSON)
         'team_metrics': json.dumps(team_metrics),
-        
+
         # Métricas de votos (dados brutos para uso no template)
         'total_votes': votes_metrics['total_votes'],
         'votes_by_tier': votes_metrics['votes_by_tier'],
         'votes_by_tier_and_team': votes_metrics['votes_by_tier_and_team'],
         'team_ranking': votes_metrics['team_ranking'],
     }
-    
+
     # Adiciona participação por turma se existir (métrica condicional)
     if 'participation_by_tier' in votes_metrics:
         context.update({
             'participation_by_tier': votes_metrics['participation_by_tier'],
         })
-    
+
     return render(request, 'votes/pages/dashboard.html', context)
