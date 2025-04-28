@@ -33,7 +33,7 @@ class Vote(models.Model):
         ('1L', '1º Logística'),
         ('2L', '2º Logística'),
     ]
-    matriculation_number = models.CharField(max_length=255, unique=True, error_messages={'unique': 'Esta matrícula já foi registrada.'})
+    matriculation_number = models.CharField(max_length=255, unique=True, error_messages={'unique': 'Um voto com esta matrícula já foi registrado.'})
     tier = models.CharField(max_length=3, choices=TIER_CHOICES)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='selections')
 
