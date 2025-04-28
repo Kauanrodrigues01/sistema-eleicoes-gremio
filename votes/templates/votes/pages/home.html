@@ -14,7 +14,7 @@
             <!-- Área onde a imagem da chapa será carregada -->
             <div id="team-info" class="text-center mb-3" style="display: none;">
                 <p class="fw-bold">Chapa Selecionada: <br><span id="team-name"></span></p>
-                <img id="team-photo" src="" alt="Foto da Chapa" class="img-fluid rounded shadow-sm" style="width: 200px;">
+                <img id="team-photo" src="" alt="Foto da Chapa" class="img-fluid rounded shadow border" style="width: 200px;">
             </div>
 
             <!-- Campo Chapa -->
@@ -55,11 +55,11 @@
         let teamInfo = document.getElementById("team-info");
         let teamName = document.getElementById("team-name");
         let teamPhoto = document.getElementById("team-photo");
-
+    
         // Exibir informações da chapa selecionada
         teamSelect.addEventListener("change", function() {
             let teamId = this.value;
-
+    
             if (teamId) {
                 fetch(`/api/teams/${teamId}/`)
                     .then(response => response.json())
@@ -68,8 +68,15 @@
                             teamInfo.style.display = "none";
                         } else {
                             teamName.textContent = data.name;
-                            teamPhoto.src = data.photo_url;
-                            teamInfo.style.display = "block";
+    
+                            if (data.photo_url) {
+                                teamPhoto.src = data.photo_url;
+                                teamPhoto.style.display = "inline"; // Mostra a imagem
+                            } else {
+                                teamPhoto.style.display = "none"; // Esconde a imagem
+                            }
+    
+                            teamInfo.style.display = "block"; // Sempre mostra o container principal
                         }
                     })
                     .catch(error => console.error("Erro ao buscar chapa:", error));

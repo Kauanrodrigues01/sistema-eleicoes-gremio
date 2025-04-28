@@ -37,7 +37,7 @@ def get_team_data(request, team_id):
     """Retorna os dados da chapa para popular a imagem via AJAX."""
     try:
         teacher = Team.objects.get(id=team_id)
-        photo_url = teacher.photo.url if teacher.photo else "/static/default-avatar.png"  # Adicionada verificação para evitar erro se a foto não existir
+        photo_url = teacher.photo.url if teacher.photo else None  # Adicionada verificação para evitar erro se a foto não existir
         return JsonResponse({
             'name': teacher.name,
             'photo_url': photo_url
