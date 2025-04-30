@@ -19,6 +19,7 @@ def home(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Voto registrado com sucesso!')
+            form = VoteForm()
         else:
             messages.error(request, 'Preencha corretamente os dados.')
     else:
