@@ -38,7 +38,7 @@ class Vote(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='selections')
 
     def __str__(self):
-        return f"{self.matriculation_number} - {self.team.name} - {self.tier}"
+        return f"{self.matriculation_number} - {self.tier}"
 
     def save(self, **kwargs):
         self.matriculation_number = self.matriculation_number.strip()
