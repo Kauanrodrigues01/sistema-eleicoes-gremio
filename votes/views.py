@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import Count, Case, When, Value, BooleanField
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 from app.metrics import get_graphic_team_metrics, get_votes_metrics
@@ -62,6 +62,11 @@ def get_teams_data(request):
 
 @login_required
 def dashboard(request):
+    if not request.user.is_superuser:
+        print('caiu aqui')
+        messages.error(request, 'Acesso negado: você precisa ser um administrador para acessar esta página.')
+        return redirect('core:login')
+
     # Obtém as métricas
     team_metrics = get_graphic_team_metrics()
     votes_metrics = get_votes_metrics()
